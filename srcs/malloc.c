@@ -12,7 +12,7 @@
 
 #include "../includes/malloc.h"
 
-void    *alloc(size)
+void    *alloc(size_t size)
 {
     void *mem;
 
@@ -46,11 +46,11 @@ int         main(int argc, char **argv)
 {
     char    *str = ft_malloc(25);
     char    *str1 = ft_malloc(80);
-    // char    *str2 = ft_malloc(25);
+    char    *str2 = ft_malloc(513);
 
-    printf("address = %p %p\n", block->tiny, block->small_mem);
+    printf("address = %p %p %p\n", block->tiny, block->small_mem, block->large);
     str = "meh I dont know either like I really dont\n";
-    // str1 = "whats the deal with girls\n";
-    // str2 = "intentional\n";
-    printf("%p, %s%p, %s", str, str, str1, str1);//, str2, str2);
+    str1 = "whats the deal with girls\n";
+    str2 = "intentional\n";
+    printf("%p, %s%p, %s%p, %s", str, str, str1, str1, str2, str2);
 }
