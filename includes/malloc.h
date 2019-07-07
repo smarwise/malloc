@@ -26,9 +26,13 @@ typedef struct  	s_block
 	t_zone			*small;
 	t_zone			*large;
 	void			*tiny;
+	void			*small_mem;
 	t_zone			*tiny_head;
+	t_zone			*small_head;
 }					t_block;
 
 t_block				*block;
 void				show_alloc_mem();
+void				*alloc_from_tiny(size_t size);
+void				*alloc_from_small(size_t size);
 #endif
