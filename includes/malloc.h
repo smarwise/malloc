@@ -29,10 +29,15 @@ typedef struct  	s_block
 	void			*small_mem;
 	t_zone			*tiny_head;
 	t_zone			*small_head;
+	t_zone			*large_head;
 }					t_block;
 
 t_block				*block;
 void				show_alloc_mem();
 void				*alloc_from_tiny(size_t size);
 void				*alloc_from_small(size_t size);
+void				*alloc(size_t size);
+void        		*alloc_from_large(size_t size);
+void        		my_free(void *ptr);
+void    			*my_realloc(void *ptr, size_t size);
 #endif
