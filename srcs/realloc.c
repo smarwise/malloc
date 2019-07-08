@@ -1,11 +1,11 @@
 #include "../includes/malloc.h"
 
-void        throw_error(void    *ptr)
+void        throw_realloc_error(void    *ptr)
 {
     printf("realloc: *** error for object %p: pointer being reallocated was not allocated\n", ptr);
 }
 
-int         realloc_in_tiny(void *ptr, size_t new_size)
+void         *realloc_in_tiny(void *ptr, size_t new_size)
 {
     if (!block->tiny_allocs)
         return (0);
@@ -62,9 +62,10 @@ void         *realloc_in_small(void *ptr, size_t new_size)
         else
             block->small = block->small->next;
     }
+    return (NULL);
 }
 
-int         realloc_in_large(void *ptr, size_t new_size)
+void            *realloc_in_large(void *ptr, size_t new_size)
 {
     if (!block->large)
         return (0);
@@ -128,11 +129,15 @@ void    *my_realloc(void *ptr, size_t size)
     block->small = block->small_head;
     block->large = block->large_head;
     if (if_exists(ptr) == 0)
-        realloc_in_large(ptr, size);
+        return (realloc_in_large(ptr, size));
     else if (if_exists(ptr) == 1)
-        realloc_in_small(ptr, size);
+        return (realloc_in_small(ptr, size));
     else if (if_exists(ptr) == 2)
-        realloc_in_tiny(ptr, size);
+        return (realloc_in_tiny(ptr, size));
     else if (if_exists(ptr) == 3)
-        throw_error(ptr);
+    {
+        throw_realloc_error(ptr);
+        return (NULL);
+    }
+    return (NULL);
 }
