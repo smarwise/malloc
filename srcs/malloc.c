@@ -48,12 +48,7 @@ int         main(void)
     char    *str1 = ft_malloc(25);
     char    *str2 = ft_malloc(25);
 
-    printf("tiny_address = %p small_adress = %p large_adress%p\n", block->tiny, block->small_mem, block->large);
-    str1 = "whats the deal with girls\n";
-    str2 = "intentional\n";
-    str = "meh I dont know either like I really dont\n";
-    printf("%p, %s%p, %s%p, %s", str, str, str1, str1, str2, str2);
-    block->tiny_allocs = block->tiny_head;
+    printf("tiny_address = %p small_adress = %p large_adress = %p\n", block->tiny, block->small_mem, block->large);
     int i = 0;
     while (block->tiny_allocs->next)
     {
@@ -61,7 +56,18 @@ int         main(void)
         block->tiny_allocs = block->tiny_allocs->next;
         i++;
     }
-    printf("str = %p", str);
+    str1 = "whats the deal with girls\n";
+    str2 = "intentional\n";
+    str = "meh I dont know either like I really dont\n";
+    printf("%p, %s%p, %s%p, %s", str, str, str1, str1, str2, str2);
+    block->tiny_allocs = block->tiny_head;
+    i = 0;
+    while (block->tiny_allocs->next)
+    {
+        printf("nb = %i, adress = %p, free? = %i, size = %lu\n", i, block->tiny_allocs->pointer, block->tiny_allocs->free, block->tiny_allocs->size);
+        block->tiny_allocs = block->tiny_allocs->next;
+        i++;
+    }
     // my_free(str);
     // while (block->tiny_allocs->next)
     // {
