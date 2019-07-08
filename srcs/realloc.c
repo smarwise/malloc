@@ -123,8 +123,6 @@ int        if_exists(void *ptr)
 
 void    *my_realloc(void *ptr, size_t size)
 {
-    t_zone  temp;
-
     block->tiny_allocs = block->tiny_head;
     block->small = block->small_head;
     block->large = block->large_head;

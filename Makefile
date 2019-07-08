@@ -3,6 +3,7 @@ NAME = malloc
 FLAGS = gcc -Wall -Wextra -Werror -Wuninitialized
 
 OBJ = obj/malloc.o obj/free.o obj/realloc.o\
+		obj/large.o obj/small.o obj/tiny.o\
 
 $(NAME): $(OBJ)
 		make -C libft/

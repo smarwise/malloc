@@ -42,31 +42,31 @@ void        *ft_malloc(size_t size)
     return (memory);
 }
 
-int         main(int argc, char **argv)
+int         main(void)
 {
     char    *str = ft_malloc(25);
-    // char    *str1 = ft_malloc(80);
-    // char    *str2 = ft_malloc(513);
+    char    *str1 = ft_malloc(25);
+    char    *str2 = ft_malloc(25);
 
-    printf("address = %p %p %p\n", block->tiny, block->small_mem, block->large);
-    // str = "meh I dont know either like I really dont\n";
+    printf("tiny_address = %p small_adress = %p large_adress%p\n", block->tiny, block->small_mem, block->large);
+    str1 = "whats the deal with girls\n";
+    str2 = "intentional\n";
+    str = "meh I dont know either like I really dont\n";
+    printf("%p, %s%p, %s%p, %s", str, str, str1, str1, str2, str2);
     block->tiny_allocs = block->tiny_head;
     int i = 0;
     while (block->tiny_allocs->next)
     {
-        printf("nb = %i, adress = %p, free? = %i, size = %lu", i, block->tiny_allocs->pointer, block->tiny_allocs->free, block->tiny_allocs->size);
+        printf("nb = %i, adress = %p, free? = %i, size = %lu\n", i, block->tiny_allocs->pointer, block->tiny_allocs->free, block->tiny_allocs->size);
         block->tiny_allocs = block->tiny_allocs->next;
         i++;
     }
-    printf("%p", str);
-    my_free(str);
-    while (block->tiny_allocs->next)
-    {
-        printf("nb = %i, adress = %p, free? = %i, size = %lu", i, block->tiny_allocs->pointer, block->tiny_allocs->free, block->tiny_allocs->size);
-        block->tiny_allocs = block->tiny_allocs->next;
-        i++;
-    }
-    // str1 = "whats the deal with girls\n";
-    // str2 = "intentional\n";
-    // printf("%p, %s%p, %s%p, %s", str, str);//, str1, str1, str2, str2);
+    printf("str = %p", str);
+    // my_free(str);
+    // while (block->tiny_allocs->next)
+    // {
+    //     printf("nb = %i, adress = %p, free? = %i, size = %lu", i, block->tiny_allocs->pointer, block->tiny_allocs->free, block->tiny_allocs->size);
+    //     block->tiny_allocs = block->tiny_allocs->next;
+    //     i++;
+    // }
 }
