@@ -39,13 +39,14 @@ void        *ft_malloc(size_t size)
         memory = size <= TINY ? alloc_from_tiny(size) : alloc_from_small(size);
     else
         memory = alloc_from_large(size);
+    printf("returned memory = %p\n", memory);
     return (memory);
 }
 
 int         main(void)
 {
     char    *str = ft_malloc(25);
-    char    *str1 = ft_malloc(25);
+    char    *str1 = ft_malloc(35);
     char    *str2 = ft_malloc(25);
 
     //printf("tiny_address = %p small_adress = %p large_adress = %p\n", block->tiny, block->small_mem, block->large);
@@ -56,23 +57,24 @@ int         main(void)
         block->tiny_allocs = block->tiny_allocs->next;
         i++;
     }
-    str1 = "whats the deal with girls\n";
-    str2 = "intentional\n";
-    str = "meh I dont know either like I really dont\n";
+    ft_strcpy(str,  "meh I dont know\n");
+    ft_strcpy(str1, "whats the devf\n");
+    ft_strcpy(str2, "intentional\n");
     printf("%p, %s%p, %s%p, %s", str, str, str1, str1, str2, str2);
     block->tiny_allocs = block->tiny_head;
     i = 0;
-    while (block->tiny_allocs->next)
+    while (block->tiny_allocs)
     {
         printf("nb = %i, adress = %p, free? = %i, size = %lu\n", i, block->tiny_allocs->pointer, block->tiny_allocs->free, block->tiny_allocs->size);
         block->tiny_allocs = block->tiny_allocs->next;
         i++;
     }
-    // my_free(str);
-    // while (block->tiny_allocs->next)
-    // {
-    //     printf("nb = %i, adress = %p, free? = %i, size = %lu", i, block->tiny_allocs->pointer, block->tiny_allocs->free, block->tiny_allocs->size);
-    //     block->tiny_allocs = block->tiny_allocs->next;
-    //     i++;
-    // }
+    my_free(str);
+    i = 0;
+    while (block->tiny_allocs)
+    {
+        printf("nb = %i, adress = %p, free? = %i, size = %lu\n", i, block->tiny_allocs->pointer, block->tiny_allocs->free, block->tiny_allocs->size);
+        block->tiny_allocs = block->tiny_allocs->next;
+        i++;
+    }
 }

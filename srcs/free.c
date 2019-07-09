@@ -14,7 +14,7 @@ int         free_in_tiny(void *ptr)
         if (block->tiny_allocs->pointer == ptr)
         {
             block->tiny_allocs->size = 0;
-            block->tiny_allocs->free = 0;
+            block->tiny_allocs->free = 1;
             block->tiny_allocs->pointer = 0x0;
             return (1);
         }
@@ -33,7 +33,7 @@ int         free_in_small(void *ptr)
         if (block->small->pointer == ptr)
         {
             block->small->size = 0;
-            block->small->free = 0;
+            block->small->free = 1;
             block->small->pointer = 0x0;
             return (1);
         }
@@ -52,7 +52,7 @@ int         free_in_large(void *ptr)
         if (block->large->pointer == ptr)
         {
             block->large->size = 0;
-            block->large->free = 0;
+            block->large->free = 1;
             block->large->pointer = 0x0;
             return (1);
         }
