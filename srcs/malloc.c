@@ -48,7 +48,7 @@ int         main(void)
     char    *str1 = ft_malloc(25);
     char    *str2 = ft_malloc(25);
 
-    printf("tiny_address = %p small_adress = %p large_adress = %p\n", block->tiny, block->small_mem, block->large);
+    //printf("tiny_address = %p small_adress = %p large_adress = %p\n", block->tiny, block->small_mem, block->large);
     int i = 0;
     while (block->tiny_allocs->next)
     {

@@ -1,6 +1,7 @@
 #ifndef MALLOC_H
 #define MALLOC_H
 
+#include "../libft/libft.h"
 #include <stdlib.h>
 #include <pthread.h>
 #include <string.h>

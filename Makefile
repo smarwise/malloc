@@ -7,7 +7,7 @@ OBJ = obj/malloc.o obj/free.o obj/realloc.o\
 
 $(NAME): $(OBJ)
 		make -C libft/
-		$(FLAGS) -o $(NAME) $(OBJ)
+		$(FLAGS) -o $(NAME) $(OBJ) libft/libft.a
 
 all:
 	make $(NAME)

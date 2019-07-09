@@ -7,14 +7,19 @@ void        throw_realloc_error(void    *ptr)
 
 void         *realloc_in_tiny(void *ptr, size_t new_size)
 {
+    void     *mem;
+
     if (!block->tiny_allocs)
-        return (0);
+        return (NULL);
     while (block->tiny_allocs->next != NULL)
     {
         if (block->tiny_allocs->pointer == ptr)
         {
             if (block->tiny_allocs->size > new_size)
-                block->tiny_allocs->size = 0;
+            {
+                block->tiny_allocs->size = new_size;
+                return (block->tiny_allocs->pointer);
+            }
             else
             {
                 if (block->tiny_allocs->next->pointer > (block->tiny_allocs->pointer + new_size + 32))
@@ -24,8 +29,9 @@ void         *realloc_in_tiny(void *ptr, size_t new_size)
                 }
                 else
                 {
-                    return(memcpy(ft_malloc(new_size), block->tiny_allocs->pointer, block->tiny_allocs->size));
+                    mem = memcpy(ft_malloc(new_size), block->tiny_allocs->pointer, block->tiny_allocs->size);
                     my_free(block->tiny_allocs->pointer);
+                    return (mem);
                 }
             }
         }
@@ -38,7 +44,7 @@ void         *realloc_in_tiny(void *ptr, size_t new_size)
 void         *realloc_in_small(void *ptr, size_t new_size)
 {
     if (!block->small)
-        return (0);
+        return (NULL);
     while (block->small->next != NULL)
     {
         if (block->small->pointer == ptr)
@@ -68,7 +74,7 @@ void         *realloc_in_small(void *ptr, size_t new_size)
 void            *realloc_in_large(void *ptr, size_t new_size)
 {
     if (!block->large)
-        return (0);
+        return (NULL);
     while (block->large->next != NULL)
     {
         if (block->large->pointer == ptr)
@@ -92,7 +98,7 @@ void            *realloc_in_large(void *ptr, size_t new_size)
         else
             block->large = block->large->next;
     }
-    return (0);
+    return (NULL);
 }
 
 int        if_exists(void *ptr)
