@@ -1,21 +1,25 @@
 #include "../includes/malloc.h"
 
-void        throw_error(void    *ptr)
+void        throw_error(void    *ptr, int error)
 {
-    printf("malloc: *** error for object %p: pointer being freed was not allocated\n", ptr);
+    if (error == 0)
+        printf("malloc: *** error for object %p: pointer being freed was not allocated\n", ptr);
+    else
+        printf("malloc: *** error for object %p: double free\n", ptr);
 }
 
 int         free_in_tiny(void *ptr)
 {
     if (!block->tiny_allocs)
         return (0);
-    while (block->tiny_allocs->next != NULL)
+    while (block->tiny_allocs)
     {
         if (block->tiny_allocs->pointer == ptr)
         {
-            block->tiny_allocs->size = 0;
-            block->tiny_allocs->free = 1;
-            block->tiny_allocs->pointer = 0x0;
+             if (block->tiny_allocs->free == 1)
+                throw_error(ptr, 1);
+            else
+                block->tiny_allocs->free = 1;
             return (1);
         }
         else
@@ -28,13 +32,14 @@ int         free_in_small(void *ptr)
 {
     if (!block->small)
         return (0);
-    while (block->small->next != NULL)
+    while (block->small)
     {
         if (block->small->pointer == ptr)
         {
-            block->small->size = 0;
-            block->small->free = 1;
-            block->small->pointer = 0x0;
+            if (block->small->free == 1)
+                throw_error(ptr, 1);
+            else
+                block->small->free = 1;
             return (1);
         }
         else
@@ -47,13 +52,14 @@ int         free_in_large(void *ptr)
 {
     if (!block->large)
         return (0);
-    while (block->large->next != NULL)
+    while (block->large)
     {
         if (block->large->pointer == ptr)
         {
-            block->large->size = 0;
-            block->large->free = 1;
-            block->large->pointer = 0x0;
+             if (block->large->free == 1)
+                throw_error(ptr, 1);
+            else
+                block->large->free = 1;
             return (1);
         }
         else
@@ -75,6 +81,6 @@ void        my_free(void *ptr)
         return ;
     else
     {
-        throw_error(ptr);
+        throw_error(ptr, 0);
     }
 }

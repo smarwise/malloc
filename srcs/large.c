@@ -4,12 +4,20 @@ void        *alloc_from_large(size_t size)
 {
     if (!block->large)
     {
-        block->large = alloc(sizeof(t_block));
+        block->large = (t_zone *)alloc(sizeof(t_block));
         block->large_head = block->large;
-        block->large->pointer = alloc(size);
-        block->large->free = 0;
-        block->large->size = size;
-        block->large->next = NULL;
+        printf("og = %p, large_head = %p\n", block->large, block->large_head);
     }
+    else
+    {
+        while (block->large->next != NULL)
+            block->large = block->large->next;
+        block->large->next = (t_zone *)alloc(sizeof(t_block));
+        block->large = block->large->next;
+    }
+    block->large->pointer = alloc(size);
+    block->large->free = 0;
+    block->large->size = size;
+    block->large->next = NULL;
     return (block->large->pointer);
 }
