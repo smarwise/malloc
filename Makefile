@@ -4,6 +4,7 @@ FLAGS = clang -Wall -Wextra -Werror -Wuninitialized
 
 OBJ = obj/malloc.o obj/free.o obj/realloc.o\
 		obj/large.o obj/small.o obj/tiny.o\
+		obj/get_new_pointer.o\
 
 $(NAME): $(OBJ)
 		make -C libft/

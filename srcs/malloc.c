@@ -89,9 +89,39 @@ int         main(void)
         block->large = block->large->next;
         i++;
     }
+    printf("after free\n");
     my_free(str);
     my_free(str3);
     my_free(str8);
+    block->tiny_allocs = block->tiny_head;
+    block->small = block->small_head;
+    block->large = block->large_head;
+    i = 0;
+    while (block->tiny_allocs)
+    {
+        printf("nb = %i, adress = %p, free? = %i, size = %lu\n", i, block->tiny_allocs->pointer, block->tiny_allocs->free, block->tiny_allocs->size);
+        block->tiny_allocs = block->tiny_allocs->next;
+        i++;
+    }
+    i = 0;
+    while (block->small)
+    {
+        printf("nb = %i, adress = %p, free? = %i, size = %lu\n", i, block->small->pointer, block->small->free, block->small->size);
+        block->small = block->small->next;
+        i++;
+    }
+    i = 0;
+    while (block->large)
+    {
+        printf("nb = %i, adress = %p, free? = %i, size = %lu\n", i, block->large->pointer, block->large->free, block->large->size);
+        block->large = block->large->next;
+        i++;
+    }
+    printf("after realloc\n");
+    my_realloc(str2, 45);
+    my_realloc(str4, 72);
+    my_realloc(str7, 530);
+    ft_malloc(512);
     block->tiny_allocs = block->tiny_head;
     block->small = block->small_head;
     block->large = block->large_head;

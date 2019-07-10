@@ -52,14 +52,16 @@ int         free_in_large(void *ptr)
 {
     if (!block->large)
         return (0);
+    printf("got here\n");
     while (block->large)
     {
         if (block->large->pointer == ptr)
         {
-             if (block->large->free == 1)
+            if (block->large->free == 1)
                 throw_error(ptr, 1);
             else
                 block->large->free = 1;
+            printf("got herewede\n");
             return (1);
         }
         else

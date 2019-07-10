@@ -42,4 +42,6 @@ void        		*alloc_from_large(size_t size);
 void        		my_free(void *ptr);
 void    			*my_realloc(void *ptr, size_t size);
 void       			*ft_malloc(size_t size);
+void				*get_new_pointer(void *ptr, size_t size);
+
 #endif

@@ -7,11 +7,9 @@ void        throw_realloc_error(void    *ptr)
 
 void         *realloc_in_tiny(void *ptr, size_t new_size)
 {
-    void     *mem;
-
     if (!block->tiny_allocs)
         return (NULL);
-    while (block->tiny_allocs->next != NULL)
+    while (block->tiny_allocs)
     {
         if (block->tiny_allocs->pointer == ptr)
         {
@@ -22,17 +20,15 @@ void         *realloc_in_tiny(void *ptr, size_t new_size)
             }
             else
             {
-                if (block->tiny_allocs->next->pointer > (block->tiny_allocs->pointer + new_size + 32))
+                if (block->tiny_allocs->next != NULL)
                 {
-                    block->tiny_allocs->size = new_size;
-                    return (block->tiny_allocs->pointer);
+                    if (block->tiny_allocs->next->pointer > (block->tiny_allocs->pointer + new_size + 32))
+                    {
+                        block->tiny_allocs->size = new_size;
+                        return (block->tiny_allocs->pointer);
+                    }
                 }
-                else
-                {
-                    mem = memcpy(ft_malloc(new_size), block->tiny_allocs->pointer, block->tiny_allocs->size);
-                    my_free(block->tiny_allocs->pointer);
-                    return (mem);
-                }
+                return (get_new_pointer(ptr, new_size));
             }
         }
         else
@@ -45,24 +41,26 @@ void         *realloc_in_small(void *ptr, size_t new_size)
 {
     if (!block->small)
         return (NULL);
-    while (block->small->next != NULL)
+    while (block->small)
     {
         if (block->small->pointer == ptr)
         {
             if (block->small->size > new_size)
-                block->small->size = 0;
+            {
+                block->small->size = new_size;
+                return (block->small->pointer);
+            }
             else
             {
-                if (block->small->next->pointer > (block->small->pointer + new_size + 32))
+                if (block->small->next != NULL)
                 {
-                    block->small->size = new_size;
-                    return (block->small->pointer);
+                    if (block->small->next->pointer > (block->small->pointer + new_size + 32))
+                    {
+                        block->small->size = new_size;
+                        return (block->small->pointer);
+                    }
                 }
-                else
-                {
-                    return(memcpy(ft_malloc(new_size), block->small->pointer, block->small->size));
-                    my_free(block->small->pointer);
-                }
+                return (get_new_pointer(ptr, new_size));
             }
         }
         else
@@ -75,49 +73,39 @@ void            *realloc_in_large(void *ptr, size_t new_size)
 {
     if (!block->large)
         return (NULL);
-    while (block->large->next != NULL)
+    while (block->large)
     {
         if (block->large->pointer == ptr)
         {
            if (block->large->size > new_size)
-                block->large->size = 0;
-            else
             {
-                if (block->large->next->pointer > (block->large->pointer + new_size + 32))
-                {
-                    block->large->size = new_size;
-                    return (block->large->pointer);
-                }
-                else
-                {
-                    return(memcpy(ft_malloc(new_size), block->large->pointer, block->large->size));
-                    my_free(block->large->pointer);
-                }
+                block->large->size = new_size;
+                return (block->large->pointer);
             }
+            break;
         }
-        else
-            block->large = block->large->next;
+        block->large = block->large->next;
     }
-    return (NULL);
+    return (get_new_pointer(ptr, new_size));
 }
 
 int        if_exists(void *ptr)
 {
-    while (block->large->next != NULL)
+    while (block->large)
     {
         if (block->large->pointer == ptr)
             return (0);
         else
             block->large = block->large->next;
     }
-    while (block->small->next != NULL)
+    while (block->small)
     {
         if (block->small->pointer == ptr)
             return (1);
         else
             block->small = block->small->next;
     }
-    while (block->tiny_allocs->next != NULL)
+    while (block->tiny_allocs)
     {
         if (block->tiny_allocs->pointer == ptr)
             return (2);
