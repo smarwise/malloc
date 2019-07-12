@@ -115,7 +115,7 @@ int        if_exists(void *ptr)
     return (3);
 }
 
-void    *my_realloc(void *ptr, size_t size)
+void    *realloc(void *ptr, size_t size)
 {
     block->tiny_allocs = block->tiny_head;
     block->small = block->small_head;

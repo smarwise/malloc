@@ -34,7 +34,7 @@ void		init_alloc()
     block->small_mem = alloc(size);	
 }
 
-void		*ft_malloc(size_t size)
+void		*malloc(size_t size)
 {
 	void	*memory;
 
@@ -48,8 +48,8 @@ void		*ft_malloc(size_t size)
     return (memory);
 }
 
-// int			main(void)
-// {
+int			main(void)
+{
 // 	char    *str1 = ft_malloc(25);
 //     char    *str2 = ft_malloc(25);
 //     char    *str3 = ft_malloc(90);
@@ -84,4 +84,4 @@ void		*ft_malloc(size_t size)
 //     my_free(str1);
 //     my_free(str2);
 //     // sleep(30);
-// }
+}
