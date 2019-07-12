@@ -2,7 +2,9 @@
 
 void        throw_realloc_error(void    *ptr)
 {
-    printf("realloc: *** error for object %p: pointer being reallocated was not allocated\n", ptr);
+    ft_putstr("realloc: *** error for object ");
+    ft_putstr(ft_itoa_base((int)ptr, 16));
+    ft_putstr(" pointer being reallocated was not allocated\n");
 }
 
 void         *realloc_in_tiny(void *ptr, size_t new_size)

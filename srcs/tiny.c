@@ -9,7 +9,6 @@ void        *alloc_from_tiny(size_t size)
     {
         block->tiny_allocs = (t_zone *)block->tiny;
         block->tiny_head = block->tiny_allocs;
-        printf("og = %p, tiny_head = %p\n", block->tiny_allocs, block->tiny_head);
     }
     else
     {

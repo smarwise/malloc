@@ -6,7 +6,6 @@ void        *alloc_from_large(size_t size)
     {
         block->large = (t_zone *)alloc(sizeof(t_block));
         block->large_head = block->large;
-        printf("og = %p, large_head = %p\n", block->large, block->large_head);
     }
     else
     {

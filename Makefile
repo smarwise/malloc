@@ -1,4 +1,11 @@
-NAME = malloc
+ifeq ($(HOSTTYPE),)
+	HOSTTYPE := $(shell uname -m)_$(shell uname -s)
+endif
+
+NAMEPT1 = libft_malloc
+NAMEPT2 = .so
+NAME = $(NAMEPT1)_$(HOSTTYPE)$(NAMEPT2)
+
 
 FLAGS = clang -Wall -Wextra -Werror -Wuninitialized
 
@@ -9,6 +16,7 @@ OBJ = obj/malloc.o obj/free.o obj/realloc.o\
 $(NAME): $(OBJ)
 		make -C libft/
 		$(FLAGS) -g  -o $(NAME) $(OBJ) libft/libft.a
+		ln -s $(NAME) $(NAMEPT1)$(NAMEPT2)
 
 all:
 	make $(NAME)
@@ -23,5 +31,6 @@ clean:
 fclean: clean
 	make fclean -C libft/
 	rm -f $(NAME)
+	rm -f $(NAMEPT1)$(NAMEPT2)
 	
 re: fclean all

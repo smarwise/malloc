@@ -3,9 +3,17 @@
 void        throw_error(void    *ptr, int error)
 {
     if (error == 0)
-        printf("malloc: *** error for object %p: pointer being freed was not allocated\n", ptr);
+    {
+        ft_putstr("malloc: *** error for object ");
+        ft_putstr(ft_itoa_base((int)ptr, 16));
+        ft_putstr(": pointer being freed was not allocated\n");
+    }
     else
-        printf("malloc: *** error for object %p: double free\n", ptr);
+    {
+        ft_putstr("malloc: *** error for object ");
+        ft_putstr(ft_itoa_base((int)ptr, 16));
+        ft_putstr(": double free\n");
+    }
 }
 
 int         free_in_tiny(void *ptr)
@@ -52,7 +60,6 @@ int         free_in_large(void *ptr)
 {
     if (!block->large)
         return (0);
-    printf("got here\n");
     while (block->large)
     {
         if (block->large->pointer == ptr)
@@ -61,7 +68,6 @@ int         free_in_large(void *ptr)
                 throw_error(ptr, 1);
             else
                 block->large->free = 1;
-            printf("got herewede\n");
             return (1);
         }
         else
