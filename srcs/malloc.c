@@ -47,6 +47,8 @@ int			main(void)
     char    *str2 = ft_malloc(25);
     char    *str3 = ft_malloc(90);
     char    *str4 = ft_malloc(78);
+    char    *str5 = ft_malloc(550);
+    char    *str6 = ft_malloc(555);
 
     block->tiny_allocs = block->tiny_head;
     printf("tiny_address = %p small_adress = %p large_adress%p\n", block->tiny, block->small_mem, block->large);
@@ -60,7 +62,7 @@ int			main(void)
     }
     ft_strcpy(str1, "whats the deal with gir\n");
     ft_strcpy(str2, "intentional\n");
-    printf("%p, %s%p, %s%p, %s%p, %s\n",  str1, str1, str2, str2, str3, str3, str4, str4);
+    printf("%p, %s%p, %s%p, %s%p, %s%p, %s%p, %s\n",  str1, str1, str2, str2, str3, str3, str4, str4, str5, str5, str6, str6);
     block->tiny_allocs = block->tiny_head;
     i = 0;
     while (block->tiny_allocs)
@@ -69,6 +71,8 @@ int			main(void)
         block->tiny_allocs = block->tiny_allocs->next;
         i++;
     }
+    my_free(str5);
+    ft_malloc(512);
     show_alloc_mem();
     my_free(str1);
     my_free(str2);

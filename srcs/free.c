@@ -78,6 +78,8 @@ int         free_in_large(void *ptr)
 
 void        my_free(void *ptr)
 {
+    if (!ptr)
+        return ;
     block->tiny_allocs = block->tiny_head;
     block->small = block->small_head;
     block->large = block->large_head;

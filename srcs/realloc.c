@@ -13,8 +13,6 @@ void        throw_realloc_error(void    *ptr)
 
 void         *realloc_in_tiny(void *ptr, size_t new_size)
 {
-    if (!block->tiny_allocs)
-        return (NULL);
     while (block->tiny_allocs)
     {
         if (block->tiny_allocs->pointer == ptr)
@@ -45,8 +43,6 @@ void         *realloc_in_tiny(void *ptr, size_t new_size)
 
 void         *realloc_in_small(void *ptr, size_t new_size)
 {
-    if (!block->small)
-        return (NULL);
     while (block->small)
     {
         if (block->small->pointer == ptr)
@@ -77,8 +73,6 @@ void         *realloc_in_small(void *ptr, size_t new_size)
 
 void            *realloc_in_large(void *ptr, size_t new_size)
 {
-    if (!block->large)
-        return (NULL);
     while (block->large)
     {
         if (block->large->pointer == ptr)
