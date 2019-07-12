@@ -4,15 +4,15 @@ void        throw_error(void    *ptr, int error)
 {
     if (error == 0)
     {
-        ft_putstr("malloc: *** error for object ");
-        ft_putstr(ft_itoa_base((int)ptr, 16));
-        ft_putstr(": pointer being freed was not allocated\n");
+        ft_putstr("malloc: *** error for object 0x10");
+        ft_putstr(ft_tolower(ft_itoa_base((int)ptr, 16)));
+        ft_putstr(" : pointer being freed was not allocated\n");
     }
     else
     {
-        ft_putstr("malloc: *** error for object ");
-        ft_putstr(ft_itoa_base((int)ptr, 16));
-        ft_putstr(": double free\n");
+        ft_putstr("malloc: *** error for object 0x10");
+        ft_putstr(ft_tolower(ft_itoa_base((int)ptr, 16)));
+        ft_putstr(" : double free\n");
     }
 }
 

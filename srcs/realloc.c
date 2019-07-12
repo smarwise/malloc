@@ -2,9 +2,13 @@
 
 void        throw_realloc_error(void    *ptr)
 {
-    ft_putstr("realloc: *** error for object ");
-    ft_putstr(ft_itoa_base((int)ptr, 16));
-    ft_putstr(" pointer being reallocated was not allocated\n");
+    char    *pointer;
+
+    pointer = ft_tolower(ft_itoa_base((int)ptr, 16));
+    ft_putstr("realloc: *** error for object 0x10");
+    ft_putstr(pointer);
+    ft_putstr(" : pointer being reallocated was not allocated\n");
+    munmap(pointer, sizeof(pointer));
 }
 
 void         *realloc_in_tiny(void *ptr, size_t new_size)

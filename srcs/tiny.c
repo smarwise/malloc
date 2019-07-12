@@ -23,5 +23,6 @@ void        *alloc_from_tiny(size_t size)
     block->tiny_allocs->free = 0;
     block->tiny_allocs->pointer = (void *)block->tiny_allocs + sizeof(t_zone);
     block->tiny_allocs->next = NULL;
+    printf("size = %lu\n", block->tiny_allocs->size);
     return (block->tiny_allocs->pointer);
 }   
