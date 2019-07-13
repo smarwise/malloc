@@ -1,43 +1,55 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   large.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: smarwise <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/07/13 01:24:36 by smarwise          #+#    #+#             */
+/*   Updated: 2019/07/13 01:31:01 by smarwise         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/malloc.h"
 
-void        *find_in_large(size_t size)
+void		*find_in_large(size_t size)
 {
-    block->large_head = block->large;
-    while (block->large->next != NULL)
-    {
-        if (block->large->size >= size && block->large->free == 1)
-        {
-            block->large->free = 0;
-            return (block->large->pointer);
-        }
-        block->large = block->large->next;
-    }
-    return (NULL);
+	block->large_head = block->large;
+	while (block->large->next != NULL)
+	{
+		if (block->large->size >= size && block->large->free == 1)
+		{
+			block->large->free = 0;
+			return (block->large->pointer);
+		}
+		block->large = block->large->next;
+	}
+	return (NULL);
 }
 
-void        *alloc_from_large(size_t size)
+void		*alloc_from_large(size_t size)
 {
-    void    *mem;
+	void	*mem;
 
-    if (!block->large)
-    {
-        block->large = (t_zone *)alloc(sizeof(t_block));
-        block->large_head = block->large;
-    }
-    else
-    {
-        mem = find_in_large(size);
-        if (mem == NULL)
-        {
-            block->large->next = (t_zone *)alloc(sizeof(t_block));
-            block->large = block->large->next;
-        }
-        else
-            return (mem);
-    }
-    block->large->pointer = alloc(size);
-    block->large->free = 0;
-    block->large->size = size;
-    block->large->next = NULL;
-    return (block->large->pointer);
+	if (!block->large)
+	{
+		block->large = (t_zone *)alloc(sizeof(t_block));
+		block->large_head = block->large;
+	}
+	else
+	{
+		mem = find_in_large(size);
+		if (mem == NULL)
+		{
+			block->large->next = (t_zone *)alloc(sizeof(t_block));
+			block->large = block->large->next;
+		}
+		else
+			return (mem);
+	}
+	block->large->pointer = alloc(size);
+	block->large->free = 0;
+	block->large->size = size;
+	block->large->next = NULL;
+	return (block->large->pointer);
 }

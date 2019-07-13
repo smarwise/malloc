@@ -6,7 +6,7 @@
 /*   By: smarwise <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 08:01:19 by smarwise          #+#    #+#             */
-/*   Updated: 2019/07/11 07:58:59 by smarwise         ###   ########.fr       */
+/*   Updated: 2019/07/13 01:34:10 by smarwise         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,38 +14,38 @@
 
 void		*alloc(size_t size)
 {
-    void	*mem;
-
-    mem = mmap(0, size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANON, -1, 0);
-    return (mem);
+	void	*mem;
+	
+	mem = mmap(0, size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANON, -1, 0);
+	return (mem);
 }
 
 void		init_alloc()
 {
-    int  size;
-    int     num;
-
-    block = alloc(sizeof(t_block));
-    num = ((TINY * 100) / getpagesize()) + 1;
-    size = (getpagesize() * num);
-    block->tiny = alloc(size);
-    num = ((LARGE * 100) / getpagesize()) + 1;
-    size = (getpagesize() * num);
-    block->small_mem = alloc(size);	
+	int		size;
+	int     num;
+	
+	block = alloc(sizeof(t_block));
+	num = ((TINY * 100) / getpagesize()) + 1;
+	size = (getpagesize() * num);
+	block->tiny = alloc(size);
+	num = ((LARGE * 100) / getpagesize()) + 1;
+	size = (getpagesize() * num);
+	block->small_mem = alloc(size);	
 }
 
 void		*malloc(size_t size)
 {
 	void	*memory;
-
-    memory = NULL;
-    if (!block)
-        init_alloc();
-    if (size < LARGE)
-        memory = size <= TINY ? alloc_from_tiny(size) : alloc_from_small(size);
-    else
-        memory = alloc_from_large(size);
-    return (memory);
+	
+	memory = NULL;
+	if (!block)
+		init_alloc();
+	if (size < LARGE)
+		memory = size <= TINY ? alloc_from_tiny(size) : alloc_from_small(size)
+	else
+		memory = alloc_from_large(size);
+	return (memory);
 }
 
 int			main(void)
